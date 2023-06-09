@@ -1,0 +1,135 @@
+@extends('layout')
+
+@section('content')
+    <!-- Begin Page Content -->
+    <div class="container-fluid">
+
+        <!-- Page Heading -->
+        <div class="d-sm-flex align-items-center justify-content-between mb-4">
+            <h1 class="h3 mb-0 text-gray-800">Edit Employee</h1>
+        </div>
+
+        <!-- Content Row -->
+
+        <div class="row">
+            <div class="col-xl-12 col-lg-7">
+                <div class="card shadow mb-4">
+                    <!-- Card Body -->
+                    <div class="card-body">
+                        @if ($message = Session::get('success'))
+                            <div class="alert alert-success alert-block">
+                                <button type="button" class="close" data-dismiss="alert">×</button>
+                                <strong>{{ $message }}</strong>
+                            </div>
+                        @endif
+                        @if(count($errors))
+                            @foreach($errors->all() as $error)
+                                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                    {{$error}}
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                            @endforeach
+                        @endif
+                        <div class="chart-area">
+                            <!-- Form -->
+                            <form class="form-validate" id="company" action="{{route('employees.update',$employee->id)}}" method="POST">
+                                @csrf
+                                @method('PUT')
+                                <input type="text" hidden value="{{$employee->id }}" id="id" name="id">
+                                <div class="row">
+                                    <div class="col-md-6 col-12">
+                                        <div class="form-group mb-2">
+                                            <label for="blog-edit-bcc">Company</label>
+                                            <select class="company_id form-control" name="company_id" id="company_id">
+                                                @foreach ($companies as $company)
+                                                    <option value="{{ $company->id }}" @if ($employee->company_id == $company->id) selected @endif
+                                                    >
+                                                        {{ $company->name }}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 col-12">
+                                        <div class="form-group mb-2">
+                                            <label for="blog-edit-first_name">First Name</label>
+                                            <input type="text" id="dt_update"
+                                                   class="first_name form-control" name="first_name"
+                                                   value="{{$employee->first_name}}" />
+                                            <span class="text-danger error-text first_name_error"></span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 col-12">
+                                        <div class="form-group mb-2">
+                                            <label for="blog-edit-last_name">Last Name</label>
+                                            <input type="text" id="dt_update"
+                                                   class="last_name form-control" name="last_name"
+                                                   value="{{$employee->last_name}}" />
+                                            <span class="text-danger error-text last_name_error"></span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 col-12">
+                                        <div class="form-group mb-2">
+                                            <label for="blog-edit-email">Email</label>
+                                            <input type="text" id="email"
+                                                   class="email form-control" name="email"
+                                                   value="{{$employee->email}}" />
+                                            <span class="text-danger error-text email_error"></span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 col-12">
+                                        <div class="form-group mb-2">
+                                            <label for="blog-edit-phone">Phone</label>
+                                            <input type="text" id="phone"
+                                                   class="website form-control" name="phone"
+                                                   value="{{$employee->phone}}" />
+                                            <span class="text-danger error-text phone_error"></span>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 d-flex flex-sm-row flex-column mt-6">
+                                        <button type="submit"
+                                                class="btn btn-primary mb-1 mb-sm-0 mr-0 mr-sm-1">
+                                            Save changes
+                                        </button>
+                                    </div>
+                                </div>
+
+                            </form>
+                            <!--/ Form -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <!-- /.container-fluid -->
+
+    <!-- End of Main Content -->
+
+    <!-- Footer -->
+    <footer class="sticky-footer bg-white" style="width:100%;
+    position:fixed; bottom:0;">
+        <div class="container my-auto">
+            <div class="copyright text-center my-auto">
+                <span>Copyright &copy; DTech-Assignment 2023</span>
+            </div>
+        </div>
+    </footer>
+    <!-- End of Footer -->
+
+@endsection
+
+@section('page-script')
+    <!-- BEGIN: Page JS-->
+
+    <script src="{{asset('js/sb-admin-2.min.js')}}"></script>
+
+    <script src="{{asset('js/demo/chart-area-demo.js')}}"></script>
+    <script src="{{asset('js/demo/chart-pie-demo.js')}}"></script>
+
+
+    <!-- END: Page JS-->
+
+@endsection
